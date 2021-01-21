@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# NICK DO NOT COPY THIS EXCELLENT CODE
+# Rajpreet Judge
+# PROGRAMMING ASSIGNMENT 3
+# Nick Macias CSE 224
+# THIS IS A HIGH/LOW GAME THE USER THINKS OF A NUMBER AND THE COMPUTER TRIES TO GUESS IT
+# THE USER HITS H FOR COMPUTER GUESS WAS TOO LOW AND L FOR COMPUTER GUESS BEING TO HIGH AND C FOR CORRECT NUMBER
+# CANNOT CHEAT BECAUSE COMPUTER WILL DETECT CHEATING
+# GOOD LUCK BUD
+
+  enter=0
+  i=0
+  high=$1
+  low=1
+  guess=0 
+  input=0
+
+
+# IF COMMAND LINE INPUT IS LESS THAN 100, SETS IT TO POSITIVE 100
+
+  if [[ $high -lt 0 ]]
+  then
+    high=$((high+100))
+  fi
+
+# IF NO COMMAND LINE INPUT SETS HIGH TO 100
+
+  if [[ $high -eq 0 ]]
+  then
+    high=$((high+100))
+  fi
+
+# SETS THE HIGH VALUE TO COMMAND LINE INPUT
+
+  if [[ $high -gt 1000 ]]	
+  then
+    echo "Im not even crazy enough to guess a number between that range"
+    exit
+  fi
+
+# WELCOMING THE USER TO THE GAME
+
+  echo
+  echo
+  echo "Welcome to the High low game (hl)!"
+  echo "Think of a number and I the computer will guess your number,"
+  echo "in the shortest amount of tries possible"
+  echo "c=correct, h=guess was too high!, l=guess was too low!"
+  echo "Hit any key to continue"
+  echo
+
+  read -s -n 1 enter
+
+# KEEPS GOING UNTIL THE USER HITS C  
+
+  while [[ $input != 'c' ]]
+  do
+    guess=$(((high+low)/2))
+
+    echo  "Is your number $guess? "
+    read -s -n 1 input
+
+    while [[ $input != 'c' ]] && [[ $input != 'h' ]] && [[ $input != 'l' ]] 
+    do 
+      echo Try entering again, c, l or h yah dingus.
+      read -s -n 1 input
+    done
+ 
+# CHANGES VALUES FOR HIGH OR LOW BASED ON USER INPUT OF C,L OR H
+
+    if [[ $input == 'c' ]] 
+    then
+      echo "Hocus pocus! it was MAGIC, but choose a harder number next time."
+    fi
+
+    if [[ $input == 'h' ]]
+    then
+      high=$((guess-1))
+    fi
+
+    if [[ $input == 'l' ]]
+    then
+      low=$((guess+1))
+    fi
+
+# KICKS OUT OF THE PROGRAM IF CHEATING DETECTED
+
+    if [[ $low -gt $high ]]
+    then
+      echo "You are cheating? User must have short term memory loss. "
+      exit
+    fi
+
+# INCREMENTS THE NUMBER OF TRIES
+
+    i=$((i+1))
+
+  done
+
+# PRINTS THE NUMBER OF TRIES
+
+  echo "Took $i attempts (easy pz)"
